@@ -6,7 +6,7 @@ module.exports = {
     name: "Hash"
   },
   info: {
-    source: "https://github.com/slothyace/BCS/blob/main/Mods",
+    source: "https://github.com/slothyace/bcs-extended/tree/main/Mods",
     creator: "Acedia",
     donate: "https://ko-fi.com/slothyacedia"
   },

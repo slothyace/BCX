@@ -2,7 +2,7 @@ module.exports = {
     data: { name: "Get User Multiple Datas" },
     category: "User Data",
     info: {
-        source: "https://github.com/slothyace/BCS/tree/main/Mods",
+        source: "https://github.com/slothyace/bcs-extended/tree/main/Mods",
         creator: "Acedia",
         donate: "https://ko-fi.com/slothyacedia"
     },
