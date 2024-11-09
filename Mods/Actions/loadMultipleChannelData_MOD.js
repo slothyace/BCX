@@ -1,13 +1,13 @@
 module.exports = {
   data: {
-    name: "Get Multiple Server Datas",
+    name: "Get Channel Multiple Datas",
   },
   info: {
-    source: "https://github.com/slothyace/bcs-extended/tree/main/Mods",
+    source: "https://github.com/slothyace/bcx/tree/main/Mods/Actions",
     creator: "Acedia",
     donate: "https://ko-fi.com/slothyacedia",
   },
-  category: "Server Data",
+  category: "Channel Data",
   UI: [
     {
       element: "input",
@@ -16,9 +16,9 @@ module.exports = {
     },
     "-",
     {
-      element: "guild",
-      storeAs: "guild",
-      name: "Server",
+      element: "channelInput",
+      storeAs: "channel",
+      name: "Channel",
     },
     {
       element: "input",
@@ -29,7 +29,7 @@ module.exports = {
     {
       element: "menu",
       storeAs: "retrievelist",
-      name: "List of Server Datas",
+      name: "List of Channel Datas",
       types: {
         data: "datas",
       },
@@ -57,7 +57,7 @@ module.exports = {
   ],
 
   subtitle: (values, constants) => {
-    return `Label: ${values.label}, Retrieve ${values.retrievelist.length} datas of ${constants.guild(values.guild)}.`
+    return `Label: ${values.label}, Retrieve ${values.retrievelist.length} datas of ${constants.channel(values.channel)}.`
   },
 
   compatibility: ["Any"],
@@ -65,10 +65,10 @@ module.exports = {
   async run (values, message, client, bridge) {
     let storedData = bridge.data.IO.get();
     let defaultVal = values.defaultval ? bridge.transf(values.defaultval) : '';
-    let guild = await bridge.getGuild(values.guild);
+    let channel = await bridge.getChannel(values.channel)
 
     for (let item of values.retrievelist) {
-      let guildData = defaultVal;
+      let channelData = defaultVal;
 
       const dataName = item.data.dataname;
       const storeLocation = item.data.store;
@@ -76,17 +76,17 @@ module.exports = {
       try {
         const transformedDataName = bridge.transf(dataName);
 
-        if (storedData.guilds && storedData.guilds[guild.id] && storedData.guilds[guild.id][transformedDataName]) {
-          guildData = storedData.guilds[guild.id][transformedDataName];
+        if (storedData.channels && storedData.channels[channel.id] && storedData.channels[channel.id][transformedDataName]) {
+          channelData = storedData.channels[channel.id][transformedDataName];
         }
       }
       
       catch (error) {
-        storedData.guilds[guild.id] = {};
+        storedData.channels[channel.id] = {};
         bridge.data.IO.write(storedData);
       }
 
-      bridge.store(storeLocation, guildData);
+      bridge.store(storeLocation, channelData);
     }
   }
 }
