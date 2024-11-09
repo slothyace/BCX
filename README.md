@@ -1,5 +1,5 @@
 # BCs-eXtended
-This repository is meant for me to upload BMD modded actions and events, as well as a centralised asset collect for people to use.
+This repository is meant for me to upload BMD modded actions and events, as well as a centralised asset collection for people to use.
 
 ## Mods/Actions
 Modded actions for BMD.
