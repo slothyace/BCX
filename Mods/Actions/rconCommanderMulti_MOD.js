@@ -1,6 +1,6 @@
 module.exports = {
   data: {
-    name: "RCON MultiCommander"
+    name: "Extended RCON MultiCommander"
   },
   category: "RCON",
   info: {
