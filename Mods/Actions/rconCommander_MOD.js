@@ -85,7 +85,9 @@ module.exports = {
       console.log(`Connection to ${ipAddr}:${ipPort} established.`)
       console.log(`Sending command: ${rconCm}`)
       rconServer.send(rconCm)
-    }).on("response", function(str){
+    })
+    
+    rconServer.on("response", function(str){
       rconServer.disconnect()
       console.log("Response received: "+ str)
       bridge.store(values.rconResponse, str)
