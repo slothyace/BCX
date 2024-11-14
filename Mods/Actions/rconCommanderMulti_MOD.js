@@ -102,9 +102,9 @@ module.exports = {
 
         const rconServer = new Rcon(ipAddr, ipPort, rconPw, config)
         rconServer.setTimeout(() => {
+          rconServer.disconnect()
           console.log(`Connection to ${ipAddr}:${ipPort} timed out.`)
           bridge.store(rconDetails.data.rconResponse, `Connection timed out.`)
-          rconServer.disconnect()
           reject()
         }, 1500)
         
@@ -112,26 +112,24 @@ module.exports = {
           console.log(`Connection to ${ipAddr}:${ipPort} established.`)
           console.log(`Sending command: ${rconCm}`)
           rconServer.send(rconCm)
-        })
-        
-        rconServer.on("response", function(str){
+        }).on("response", function(str){
+          rconServer.disconnect()
           console.log("Response received: "+ str)
           bridge.store(rconDetails.data.rconResponse, str)
-          rconServer.disconnect()
           bridge.runner(rconDetails.data.actions)
           resolve()
         })
         
         rconServer.on("end", function(){
-          console.log(`Connection to ${ipAddr}:${ipPort} dropped.`)
           rconServer.disconnect()
+          console.log(`Connection to ${ipAddr}:${ipPort} dropped.`)
           resolve()
         })
         
         rconServer.on("error", function(str){
+          rconServer.disconnect()
           console.log(`Error: ${str}`)
           bridge.store(rconDetails.data.rconResponse, `Error: ${str}`)
-          rconServer.disconnect()
           reject()
         })
 
