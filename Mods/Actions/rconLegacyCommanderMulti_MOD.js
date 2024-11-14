@@ -1,6 +1,6 @@
 module.exports = {
   data:{
-    name: "Legacy RCON MultiCommander"
+    name: "RCON MultiCommander"
   },
   info: {
     source: "https://github.com/slothyace/bcx/tree/main/Mods/Actions",

@@ -1,6 +1,6 @@
 module.exports = {
   data:{
-    name: "Legacy RCON Commander"
+    name: "RCON Commander"
   },
   info: {
     source: "https://github.com/slothyace/bcx/tree/main/Mods/Actions",
@@ -63,7 +63,7 @@ module.exports = {
         port: ipPort,
         pass: rconPw,
       }
-      
+
       const rcon = new Rcon(config)
 
       const rconServer = rcon.connect({
