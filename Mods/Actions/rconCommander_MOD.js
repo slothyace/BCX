@@ -74,7 +74,7 @@ module.exports = {
     const rconPw = bridge.transf(values.rconPassword)
     const rconCm = bridge.transf(values.rconCommand)
 
-    rconServer = new Rcon(ipAddr, ipPort, rconPw, config)
+    const rconServer = new Rcon(ipAddr, ipPort, rconPw, config)
     rconServer.setTimeout(() => {
       console.log(`Connection to ${ipAddr}:${ipPort} timed out.`)
       bridge.store(values.rconResponse, `Connection timed out.`)
