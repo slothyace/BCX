@@ -25,12 +25,12 @@ module.exports = {
       storeAs: "rconPassword",
       name: "RCON Server Password",
     },
-    "-",
     {
       element: "largeInput",
       storeAs: "rconCommand",
       name: "RCON Command",
     },
+    "-",
     {
       element: "store",
       storeAs: "rconResponse",
