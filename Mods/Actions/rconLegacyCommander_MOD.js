@@ -52,19 +52,20 @@ module.exports = {
   async run(values, interaction, client, bridge){
     const Rcon = require("mbr-rcon")
 
-    const ipAddr = bridge.transf(values.ipAddress)
-    const ipPort = bridge.transf(values.ipPort)
-    const rconPw = bridge.transf(values.rconPassword)
-    const rconCm = bridge.transf(values.rconCommand)
-
-    const config = {
-      host: ipAddr,
-      port: ipPort,
-      pass: rconPw,
-    }
-    const rcon = new Rcon(config)
-
     await new Promise((resolve, reject) => {
+      const ipAddr = bridge.transf(values.ipAddress)
+      const ipPort = bridge.transf(values.ipPort)
+      const rconPw = bridge.transf(values.rconPassword)
+      const rconCm = bridge.transf(values.rconCommand)
+
+      const config = {
+        host: ipAddr,
+        port: ipPort,
+        pass: rconPw,
+      }
+      
+      const rcon = new Rcon(config)
+
       const rconServer = rcon.connect({
         onSuccess: () => {
           console.log(`Connection to ${ipAddr}:${ipPort} established.`)
