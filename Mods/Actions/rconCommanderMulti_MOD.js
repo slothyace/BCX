@@ -72,13 +72,6 @@ module.exports = {
               storeAs: "actions",
               name: "On Response, Run"
             },
-            {
-              element: "toggle",
-              storeAs: "logging",
-              name: "Log To Console For Debugging?",
-              true: "Yes",
-              false: "No"
-            },
           ]
         }
       }
@@ -110,14 +103,14 @@ module.exports = {
 
         const rconServer = new Rcon(ipAddr, ipPort, rconPw, config)
         rconServer.setTimeout(() => {
-          if (logging){console.log(`Connection to ${ipAddr}:${ipPort} timed out.`)}
+          if (logging == true){console.log(`Connection to ${ipAddr}:${ipPort} timed out.`)}
           bridge.store(rconDetails.data.rconResponse, `Connection timed out.`)
           rconServer.disconnect()
           reject()
         }, 1500)
         
         rconServer.on("auth", function(){
-          if (logging){
+          if (logging == true){
             console.log(`Connection to ${ipAddr}:${ipPort} established.`)
             console.log(`Sending command: ${rconCm}`)
           }
@@ -125,7 +118,7 @@ module.exports = {
         })
         
         rconServer.on("response", function(str){
-          if (logging){console.log("Response received: "+ str)}
+          if (logging == true){console.log("Response received: "+ str)}
           bridge.store(rconDetails.data.rconResponse, str)
           rconServer.disconnect()
           bridge.runner(rconDetails.data.actions)
@@ -133,13 +126,13 @@ module.exports = {
         })
         
         rconServer.on("end", function(){
-          if (logging){console.log(`Connection to ${ipAddr}:${ipPort} dropped.`)}
+          if (logging == true){console.log(`Connection to ${ipAddr}:${ipPort} dropped.`)}
           rconServer.disconnect()
           resolve()
         })
         
         rconServer.on("error", function(str){
-          if (logging){console.log(`Error: ${str}`)}
+          if (logging == true){console.log(`Error: ${str}`)}
           bridge.store(rconDetails.data.rconResponse, `Error: ${str}`)
           rconServer.disconnect()
           reject()

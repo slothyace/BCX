@@ -84,14 +84,14 @@ module.exports = {
     const rconServer = new Rcon(ipAddr, ipPort, rconPw, config)
 
     rconServer.on("auth", function(){
-      if (logging){console.log(`Connection made with ${ipAddr}:${ipPort}, authentication success.`)}
+      if (logging == true){console.log(`Connection made with ${ipAddr}:${ipPort}, authentication success.`)}
     })
     
     rconServer.on("error", function(err){
-      if (logging){console.log(`Error: ${err}`)}
+      if (logging == true){console.log(`Error: ${err}`)}
       bridge.store(values.serverMessage, `Error: ${err}`)
       if (bridge.transf(values.maintain) == true){
-        if (logging){console.log(`Connection with ${ipAddr}:${ipPort} dropped, attempting reconnecting.`)}
+        if (logging == true){console.log(`Connection with ${ipAddr}:${ipPort} dropped, attempting reconnecting.`)}
         rconServer.connect()
       } else if (bridge.transf(values.maintain) == false){
         console.log(`Connection with ${ipAddr}:${ipPort} dropped.`)
@@ -101,22 +101,22 @@ module.exports = {
     
     rconServer.on("end", function(){
       if (bridge.transf(values.maintain) == true){
-        if (logging){console.log(`Connection with ${ipAddr}:${ipPort} dropped, attempting reconnecting.`)}
+        if (logging == true){console.log(`Connection with ${ipAddr}:${ipPort} dropped, attempting reconnecting.`)}
         rconServer.connect()
       } else if (bridge.transf(values.maintain) == false){
-        if (logging){console.log(`Connection with ${ipAddr}:${ipPort} dropped.`)}
+        if (logging == true){console.log(`Connection with ${ipAddr}:${ipPort} dropped.`)}
         rconServer.disconnect()
       }
     })
     
     rconServer.on("response", function (str) {
-      if (logging){console.log(str)}
+      if (logging == true){console.log(str)}
       bridge.store(values.serverMessage, str)
       bridge.runner(values.toRunAct)
     })
     
     rconServer.on("server", function (str) {
-      if (logging){console.log(str)}
+      if (logging == true){console.log(str)}
       bridge.store(values.serverMessage, str)
       bridge.runner(values.toRunAct)
     })
