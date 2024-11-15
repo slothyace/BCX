@@ -71,7 +71,14 @@ module.exports = {
               element: "actions",
               storeAs: "actions",
               name: "On Response, Run"
-            }
+            },
+            {
+              element: "toggle",
+              storeAs: "logging",
+              name: "Log To Console For Debugging?",
+              true: "Yes",
+              false: "No"
+            },
           ]
         }
       }
@@ -99,23 +106,26 @@ module.exports = {
         const ipPort = bridge.transf(rconDetails.data.ipPort)
         const rconPw = bridge.transf(rconDetails.data.rconPassword)
         const rconCm = bridge.transf(rconDetails.data.rconCommand)
+        const logging = bridge.transf(rconDetails.data.logging)
 
         const rconServer = new Rcon(ipAddr, ipPort, rconPw, config)
         rconServer.setTimeout(() => {
-          console.log(`Connection to ${ipAddr}:${ipPort} timed out.`)
+          if (logging){console.log(`Connection to ${ipAddr}:${ipPort} timed out.`)}
           bridge.store(rconDetails.data.rconResponse, `Connection timed out.`)
           rconServer.disconnect()
           reject()
         }, 1500)
         
         rconServer.on("auth", function(){
-          console.log(`Connection to ${ipAddr}:${ipPort} established.`)
-          console.log(`Sending command: ${rconCm}`)
+          if (logging){
+            console.log(`Connection to ${ipAddr}:${ipPort} established.`)
+            console.log(`Sending command: ${rconCm}`)
+          }
           rconServer.send(rconCm)
         })
         
         rconServer.on("response", function(str){
-          console.log("Response received: "+ str)
+          if (logging){console.log("Response received: "+ str)}
           bridge.store(rconDetails.data.rconResponse, str)
           rconServer.disconnect()
           bridge.runner(rconDetails.data.actions)
@@ -123,13 +133,13 @@ module.exports = {
         })
         
         rconServer.on("end", function(){
-          console.log(`Connection to ${ipAddr}:${ipPort} dropped.`)
+          if (logging){console.log(`Connection to ${ipAddr}:${ipPort} dropped.`)}
           rconServer.disconnect()
           resolve()
         })
         
         rconServer.on("error", function(str){
-          console.log(`Error: ${str}`)
+          if (logging){console.log(`Error: ${str}`)}
           bridge.store(rconDetails.data.rconResponse, `Error: ${str}`)
           rconServer.disconnect()
           reject()
