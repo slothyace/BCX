@@ -94,7 +94,7 @@ module.exports = {
         if (logging == true){console.log(`Connection with ${ipAddr}:${ipPort} dropped, attempting reconnecting.`)}
         rconServer.connect()
       } else if (bridge.transf(values.maintain) == false){
-        console.log(`Connection with ${ipAddr}:${ipPort} dropped.`)
+        if (logging == true){console.log(`Connection with ${ipAddr}:${ipPort} dropped.`)}
         rconServer.disconnect()
       }
     })
