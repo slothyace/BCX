@@ -411,13 +411,6 @@ module.exports = {
       storeAs: "raw",
       name: "Store all information received from the server in a disorganized format as (object)",
     },
-    "-",
-    {
-      element: "largeInput",
-      storeAs: "additionalOptions",
-      name: "Additional Options For Query Calls",
-      placeholder: "Optional - JSON Only"
-    }
   ],
 
   async run(values, interaction, client, bridge) {
